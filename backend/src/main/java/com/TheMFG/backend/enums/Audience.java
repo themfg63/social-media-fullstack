@@ -1,4 +1,4 @@
 package com.TheMFG.backend.enums;
 
-public class Audience {
+public enum Audience {
 }
