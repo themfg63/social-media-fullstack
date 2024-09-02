@@ -5,15 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
-@AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@AllArgsConstructor
 @Getter
-public class RegistrationObject {
-    private String firstName;
-    private String lastName;
+@Setter
+public class FindUsernameDTO {
     private String email;
-    private Date dt;
+    private String phone;
+    private String username;
 }
