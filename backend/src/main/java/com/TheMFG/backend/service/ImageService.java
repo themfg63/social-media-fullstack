@@ -1,5 +1,7 @@
 package com.TheMFG.backend.service;
 
+import com.TheMFG.backend.exception.UnableToResolvePhotoException;
+import com.TheMFG.backend.exception.UnableToSavePhotoException;
 import com.TheMFG.backend.model.Image;
 import com.TheMFG.backend.repository.ImageRepository;
 import jakarta.transaction.Transactional;
@@ -24,7 +26,7 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-    public Image uploadImage(MultipartFile file, String prefix) throws UnableToSavePhotoException{
+    public Image uploadImage(MultipartFile file, String prefix) throws UnableToSavePhotoException {
         try{
             String extention = "." + file.getContentType().split("/")[1];
             File img = File.createTempFile(prefix,extention,DIRECTORY);
@@ -38,7 +40,7 @@ public class ImageService {
         }
     }
 
-    public byte[] downloadImage(String filename) throws UnableToResolvePhotoException{
+    public byte[] downloadImage(String filename) throws UnableToResolvePhotoException {
         try{
             Image image = imageRepository.findByImageName(filename).get();
             String filePath = image.getImagePath();

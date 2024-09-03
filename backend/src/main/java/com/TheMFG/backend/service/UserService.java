@@ -2,6 +2,7 @@ package com.TheMFG.backend.service;
 
 import com.TheMFG.backend.dto.FindUsernameDTO;
 import com.TheMFG.backend.dto.RegistrationObject;
+import com.TheMFG.backend.exception.*;
 import com.TheMFG.backend.model.Image;
 import com.TheMFG.backend.model.Role;
 import com.TheMFG.backend.model.User;
@@ -125,7 +126,7 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
-    public User setProfileOrBannerPicture(String username, MultipartFile file,String prefix) throws UnableToSavePhotoException{
+    public User setProfileOrBannerPicture(String username, MultipartFile file,String prefix) throws UnableToSavePhotoException {
         User user = userRepository.findByUsername(username).orElseThrow(UserDoesNotExistException::new);
 
         Image image = imageService.uploadImage(file,prefix);

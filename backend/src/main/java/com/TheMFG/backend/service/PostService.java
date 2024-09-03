@@ -1,6 +1,8 @@
 package com.TheMFG.backend.service;
 
 import com.TheMFG.backend.dto.CreatePostDTO;
+import com.TheMFG.backend.exception.PostDoesNotExistException;
+import com.TheMFG.backend.exception.UnableToCreatePostException;
 import com.TheMFG.backend.model.Image;
 import com.TheMFG.backend.model.Post;
 import com.TheMFG.backend.model.User;
