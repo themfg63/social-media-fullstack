@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class CreatePostDTO {
     private String content;
-    private User user;
+    private User author;
     Set<Post> replies;
     private List<Image> images;
     private Boolean scheduled;
