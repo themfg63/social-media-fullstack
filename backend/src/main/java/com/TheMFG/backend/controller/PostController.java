@@ -24,17 +24,17 @@ public class PostController {
 
     @ExceptionHandler({UnableToCreatePostException.class})
     public ResponseEntity<String> handleUnableToCreatePost(){
-        return new ResponseEntity<>("Şu anda Gönderi Oluşturulamıyor",HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Şu an da Gönderi Oluşturulamıyor." , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({PostDoesNotExistException.class})
     public ResponseEntity<String> handlePostDoesntExist(){
-        return new ResponseEntity<>("Post Bulunamadı", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Gönderi Bulunamadı",HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
     public List<Post> getAllPosts(){
-        return postService.getAllPosts();
+        return postService.getAllPosts()    ;
     }
 
     @PostMapping
@@ -42,8 +42,8 @@ public class PostController {
         return postService.createPost(postDTO);
     }
 
-    @PostMapping(value = "/media",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Post createMediaPost(@RequestPart("post") String post, @RequestPart("media")List<MultipartFile> files){
+    @PostMapping(value = "/media", consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Post createMediaPost(@RequestPart("post")String post,@RequestPart("media")List<MultipartFile> files){
         return postService.createMediaPost(post,files);
     }
 
@@ -61,6 +61,7 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable int id){
-        postService.deletePost
+        postService.deletePostId(id);
+        return ResponseEntity.ok("Gönderi Başarıyla Silindi!");
     }
 }
