@@ -30,33 +30,43 @@ public class Post {
     private User author;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_likes_junction",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable( name = "post_likes_junction",
+                joinColumns = @JoinColumn(name = "post_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> likes;
 
     @OneToMany
     private List<Image> images;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_reply_juntion",joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "reply_id"))
+    @JoinTable( name = "post_reply_juntion",
+                joinColumns = @JoinColumn(name = "post_id"),
+                inverseJoinColumns = @JoinColumn(name = "reply_id"))
     @JsonIgnore
     private Set<Post> replies;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_repost_juntion", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable( name = "post_repost_juntion",
+                joinColumns = @JoinColumn(name = "post_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> reposts;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_bookmark_juntion", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable( name = "post_bookmark_juntion",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> bookmarks;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_view_juntion",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable( name = "post_view_juntion",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> views;
 
     private boolean scheduled;
 
     @Column(name = "scheduled_date")
-    private Date scheduldeDate;
+    private Date scheduledDate;
 
     @Enumerated(EnumType.ORDINAL)
     private Audience audience;
@@ -64,6 +74,10 @@ public class Post {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "reply_restriction")
     private ReplyRestriction replyRestriction;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "poll_id",referencedColumnName = "poll_id")
+    private Poll poll;
 
     public Post(){
         super();
@@ -74,4 +88,5 @@ public class Post {
         this.bookmarks = new HashSet<>();
         this.views = new HashSet<>();
     }
+
 }

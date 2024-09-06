@@ -3,6 +3,7 @@ package com.TheMFG.backend.dto;
 import com.TheMFG.backend.enums.Audience;
 import com.TheMFG.backend.enums.ReplyRestriction;
 import com.TheMFG.backend.model.Image;
+import com.TheMFG.backend.model.Poll;
 import com.TheMFG.backend.model.Post;
 import com.TheMFG.backend.model.User;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,5 @@ public class CreatePostDTO {
     private Date scheduledDate;
     private Audience audience;
     private ReplyRestriction replyRestriction;
+    private Poll poll;
 }
