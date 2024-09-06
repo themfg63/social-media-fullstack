@@ -71,11 +71,73 @@ public class PostService {
         post.setAuthor(dto.getAuthor());
         post.setReplies(dto.getReplies());
         post.setScheduled(dto.getScheduled());
-        post.setScheduldeDate(dto.getScheduledDate());
+        post.setScheduledDate(dto.getScheduledDate());
         post.setAudience(dto.getAudience());
         post.setReplyRestriction(dto.getReplyRestriction());
         post.setImages(dto.getImages());
-        post.setPoll
+        post.setPoll(savedPoll);
+
+        try{
+            Post posted = postRepository.save(post);
+            return posted;
+        }catch (Exception e){
+            throw new UnableToCreatePostException();
+        }
+    }
+
+    public Post createMediaPost(String post, List<MultipartFile> files){
+        CreatePostDTO dto = new CreatePostDTO();
+
+        try{
+            ObjectMapper objectMapper = new ObjectMapper();
+            dto = objectMapper.readValue(post, CreatePostDTO.class);
+
+            Post p = new Post();
+            p.setContent(dto.getContent());
+
+            if(dto.getScheduled()){
+                p.setPostedDate(dto.getScheduledDate());
+            }else{
+                p.setPostedDate(new Date());
+            }
+
+            p.setAuthor(dto.getAuthor());
+            p.setReplies(dto.getReplies());
+            p.setScheduled(dto.getScheduled());
+            p.setScheduledDate(dto.getScheduledDate());
+            p.setAudience(dto.getAudience());
+            p.setReplyRestriction(dto.getReplyRestriction());
+
+            List<Image> postImages = new ArrayList<>();
+
+            for(int i = 0; i < files.size(); i++){
+                Image postImage = imageService.uploadImage(files.get(i), "post");
+                postImages.add(postImage);
+            }
+
+            p.setImages(postImages);
+
+            return postRepository.save(p);
+        }catch (Exception e){
+            throw new UnableToCreatePostException();
+        }
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAll();
+    }
+
+    public Post getPostById(Integer id){
+        return postRepository.findById(id).orElseThrow(PostDoesNotExistException::new);
+    }
+
+    public Set<Post> getAllPostsByAuthor(User author){
+        Set<Post> posts = postRepository.findByAuthor(author).orElse(new HashSet<>());
+        return posts;
+    }
+
+    public void deletePostById(int id){
+        postRepository.deleteById(id);
     }
 
 }
